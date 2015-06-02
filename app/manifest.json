@@ -1,6 +1,7 @@
 {
   "name": "__MSG_appName__",
-  "version": "0.0.1",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr7wkMxzkTi7LwBmb7RbPO0x0z6JV/NemPXijqXsO2JjECz2SoWCSPOS8O1E/jeM/g2ssQS9TVRbprxxwhSz0SiL2wRwHavcLNIichJ+P0YJxIcLzSeCtuQlyJe9kLBxsyu/K9HJPrk528qyTmO2hAgp7pX8JAy4PtZTsVzBctk8fR8DuCVd84Bwr/03al6g0TbrMjI60pF8d1nXHkC126s2nJIzcEcwW+kowdaeF2ftel5X5fCe/7D6x/qy95mdVaqGdTd9+jhKJrfOYYNgS2HEg3vbqVgGS9Ibp2fevTrNG3FV5UlBnk8uELou9+tP7Fbdn07KKiJyr4XPWgBu/aQIDAQAB",
+  "version": "0.0.5",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -14,5 +15,39 @@
       "scripts/background.js"
     ]
   },
-  "options_page": "options.html"
+  "browser_action": {
+    "default_icon": {
+      "19": "images/icon-19.png",
+      "38": "images/icon-38.png"
+    },
+    "default_title": "whoson",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "omnibox": {
+    "keyword": "whoson"
+  },
+  "permissions": [
+    "identity"
+  ],
+  "oauth2": {
+    "client_id": "680811618672-8ghhfjh5hen6t7d5aq8ket7kfb7624vf.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/plus.login",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ]
 }
