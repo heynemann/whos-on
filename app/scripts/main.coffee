@@ -1,6 +1,7 @@
 class WhosOn
     constructor: (@self, @options) ->
         @interval = null
+        @initTimeout = null
         @initialize()
 
     initialize: ->
@@ -12,6 +13,14 @@ class WhosOn
                     user: @self,
                     url: window.location.href
                 }))
+            , 1000)
+
+        @ws.onclose = (event) =>
+            @destroy()
+            @initTimeout = window.setTimeout(=>
+                window.clearTimeout(@initTimeout)
+                @initTimeout = null
+                @initialize()
             , 1000)
 
         @ws.onmessage = (message) =>
