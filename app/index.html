@@ -50,9 +50,8 @@
         var obj = new WhosOn(name);
 
         txtName.on('change', function(ev) {
-            obj.destroy();
             var name = txtName.val();
-            obj = new WhosOn(name);
+            obj.setName(name);
         });
     </script>
 </body>

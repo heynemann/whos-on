@@ -4,16 +4,23 @@ class WhosOn
         @initTimeout = null
         @initialize()
 
+    ping: =>
+        @ws.send(JSON.stringify({
+            user: @self,
+            url: window.location.href
+        }))
+
+        window.clearTimeout(@interval) if @interval
+        @interval = window.setTimeout(@ping, 1000)
+
+    setName: (name) ->
+        @self = name
+
     initialize: ->
         @ws = new WebSocket("ws://localhost:3128/subscribe/" + window.location)
 
         @ws.onopen = (event) =>
-            @interval = window.setInterval(=>
-                @ws.send(JSON.stringify({
-                    user: @self,
-                    url: window.location.href
-                }))
-            , 1000)
+            @ping()
 
         @ws.onclose = (event) =>
             @destroy()
@@ -26,9 +33,5 @@ class WhosOn
         @ws.onmessage = (message) =>
             console.log(message)
 
-    destroy: ->
-        window.clearInterval(@interval) if @interval
-        @interval = null
-        @ws.close()
 
 window.WhosOn = WhosOn
